@@ -53,8 +53,8 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
             $gameDiv.append(matrix.$container);
 
             $gameDiv.css({width: matrix.matrixWidth + "px", height: matrix.matrixHeight + "px"});
-            $gameContainer.css({width: (parseInt($gameDiv.outerWidth())-5) + "px"});
-            console.log({width: (parseInt($gameDiv.outerWidth())-5) + "px"});
+            $gameContainer.css({width: (parseInt($gameDiv.outerWidth()) - 5) + "px"});
+            console.log({width: (parseInt($gameDiv.outerWidth()) - 5) + "px"});
 
             //
             restartGame();
@@ -86,12 +86,19 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
         }
 
         //==========================================================================================
+        var hasTouch = !!('ontouchstart' in window);
+        var touchStart = hasTouch ? 'touchstart' : 'mousedown';
+        var touchEnd = hasTouch ? 'touchend' : 'mouseup';
+
         function bindEvent(bind) {
+
+
             if (bind) {
-                $('body').bind('keydown', keyDown).bind('mousedown', startDrag);
+                $('body').bind('keydown', keyDown).bind(touchStart, startDrag);
             } else {
-                $('body').unbind('keydown', keyDown).unbind('mousedown', startDrag);
+                $('body').unbind('keydown', keyDown).unbind(touchStart, startDrag);
             }
+
         }
 
 
@@ -111,8 +118,10 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
 
         function startDrag(event) {
             oldMouse = [event.pageY, event.pageX];
-            $('body').bind('mouseup', stopDrag);
-            $('body').bind('mouseleave', stopDrag);
+            $('body').bind(touchEnd, stopDrag);
+            if (!hasTouch) {
+                $('body').bind('mouseleave', stopDrag);
+            }
         }
 
         function stopDrag(event) {
