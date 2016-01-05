@@ -1,21 +1,21 @@
 /**
  * Created by CC on 16-1-3.
  */
-define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"],
-    function ($, CardMatrix, Card, Vector, Utils) {
+define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"],
+    function ($, Hammer, CardMatrix, Card, Vector, Utils) {
 
         //////////=============================////////////////
-
-
         var matrix;
         var _score;
         var $gameContainer;
         var $gameDiv;
         var $scoreTxt;
+        var $body
 
 
         function init() {
             console.log("init");
+            $body = $('body');
 
             $gameContainer = $('.gameContainer')
             $gameDiv = $("#gameDiv");
@@ -28,8 +28,6 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
             //
             start();
         }
-
-
         //==========================================================================================
         function start() {
             var numX = parseInt($("#numX").val());
@@ -86,21 +84,22 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
         }
 
         //==========================================================================================
-        var hasTouch = !!('ontouchstart' in window);
-        var touchStart = hasTouch ? 'touchstart' : 'mousedown';
-        var touchEnd = hasTouch ? 'touchend' : 'mouseup';
+
 
         function bindEvent(bind) {
-
-
-            if (bind) {
-                $('body').bind('keydown', keyDown).bind(touchStart, startDrag);
-            } else {
-                $('body').unbind('keydown', keyDown).unbind(touchStart, startDrag);
-            }
-
+            bindKeys(bind);
+            //bindMouseDrag(bind);
+            bindHummerEvent(bind);
         }
 
+        ///========================================================
+        function bindKeys(bind) {
+            if (bind) {
+                $body.bind('keydown', keyDown);
+            } else {
+                $body.unbind('keydown', keyDown);
+            }
+        }
 
         var keyCodes = ['38', '40', '37', '39']
 
@@ -114,13 +113,49 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
             }
         }
 
+        ///=========================guesture pan===============================
+        var bodyHammer;
+
+        function bindHummerEvent(bind) {
+            bodyHammer = bodyHammer ? bodyHammer :
+                new Hammer.Manager($body[0], {
+                    recognizers: [
+                        [Hammer.Pan, {direction: Hammer.DIRECTION_ALL}],
+                    ]
+                });
+            if (bind) {
+                bodyHammer.on('panup pandown panleft panright', onHammerpan);
+            } else {
+                bodyHammer.off('panup pandown panleft panright', onHammerpan);
+            }
+        }
+
+        function onHammerpan(event) {
+            console.log("hammer"+event.type);
+            var indexs = {panup: 0, pandown: 1, panleft: 2, panright: 3};
+            var index = indexs[event.type];
+            move(CardMatrix.dirs[index]);
+        }
+
+        //================================Old PC Mouse==============================
+        var hasTouch = false;
+        console.log("hasTouch" + hasTouch);
+
+        function bindMouseDrag(bind) {
+            if (bind) {
+                $gameDiv.bind('mousedown', startDrag);
+            } else {
+                $gameDiv.unbind('mousedown', startDrag);
+            }
+        }
+
         var oldMouse;
 
         function startDrag(event) {
             oldMouse = [event.pageY, event.pageX];
-            $('body').bind(touchEnd, stopDrag);
+            $body.bind('mouseup', stopDrag);
             if (!hasTouch) {
-                $('body').bind('mouseleave', stopDrag);
+                $body.bind('mouseleave', stopDrag);
             }
         }
 
@@ -139,8 +174,8 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
                 move(CardMatrix.dirs[index]);
             }
             //
-            $('body').unbind('mouseup', stopDrag);
-            $('body').unbind('mouseleave', stopDrag);
+            $body.unbind('mouseup', stopDrag);
+            $body.unbind('mouseleave', stopDrag);
         }
 
 
@@ -227,6 +262,6 @@ define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"]
             return $bkGrid;
         }
 
-        return {init: init, checkEnd: nextLoop};
+        return {init: init};
     })
 ;

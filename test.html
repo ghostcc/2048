@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+<div id="debug" style="width: 500px;height: 300px;background: #ff0000;overflow: scroll">debug</div>
+<script src="js/jquery-1.11.3.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        function trace(s) {
+            $("#debug").prepend(s + "<br/>")
+        }
+
+        $('body').bind("resize scroll tap ", function (event) {
+            trace(event.type);
+        })
+
+        $('body').bind("touchstart", function (event) {
+            for (var i in event) {
+                if (!( event[i] instanceof Function)) {
+                    trace(i + ": " + event[i] + "/n");
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>
