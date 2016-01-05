@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<link>
+<meta charset="UTF-8">
+<title>2048</title>
+<link href="css/css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="gameContainer">
+    <div class="gameTitle">2048</div>
+    <div class="gameHead">
+        <div class="optionContainer">
+            <div class="selectorContainer">
+                Size:
+                <select id="numX" class="numSelector">
+                    <option>4</option>
+                    <option selected="selected">5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                </select>
+                x
+                <select id="numY" class="numSelector">
+                    <option>4</option>
+                    <option selected="selected">5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                </select>
+            </div>
+            <div class="restart">Restart</div>
+        </div>
+
+        <div class="gameScore">score:<span class="score">0</span></div>
+    </div>
+
+
+    <div id="gameDiv"></div>
+    <div class="gameFoot">
+        <div class="gameFootTxt">操作:方向键或拖动</div>
+        <div class="copy">Copyright © 2015 <span style="color: #aaa">GhostFlash.</span> <br/>All Rights Reserved</div>
+    </div>
+</div>
+<script src="js/require.js" type="text/javascript"></script>
+<script type="text/javascript">
+    requirejs.config({
+        baseUrl: "js",
+        paths: {
+            jquery: 'jquery-1.11.3',
+
+        }
+    })
+    requirejs(['jquery', "game/Game", "game/Card"], function ($, Game, Card) {
+        console.log("start" + this);
+        this.Game = Game;
+        Game.init();
+    })
+</script>
+</body>
+</html>

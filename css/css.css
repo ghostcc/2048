@@ -1,0 +1,200 @@
+body {
+    background: #ffffff;
+    font-family: Arial;
+
+
+    background: #fefefe;
+}
+
+.gameContainer {
+    margin: auto;
+    display: block;
+
+    width: 400px;
+
+}
+
+.gameTitle {
+    margin: auto;
+    padding-left: 15px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 50px;
+    height: 0px;
+    text-shadow: #000000 0 1px 2px;
+    color: #d6ff67;
+}
+
+.gameHead {
+    position:relative;
+    height: 66px;
+
+    text-shadow: #000000 0 1px 2px;
+    color: #ffffff;
+}
+.optionContainer{
+    position: absolute;
+    left: 5px;
+    bottom: 8px;
+
+    border-radius: 5px;
+    background: #d0f5e0;
+    border: 1px solid #eeeeee;
+    box-shadow: #333333 1px 1px 3px;;
+
+    padding:3px 15px 5px 15px ;
+
+}
+.restart{
+    border: solid 1px #e0d6db;
+    border-radius: 5px;
+    background: #f36e68;
+    padding: 5px 15px;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.selectorContainer{
+    font-size: 13px;
+}
+
+.numSelector{
+    border: 1px dashed #cccccc;
+
+    color: #ffffff;
+    text-shadow: #000000 0 1px 2px;
+
+    background: inherit;
+    /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+    padding-right: 5px;
+    padding-left: 5px;
+
+    height: 24px;
+}
+
+/*--------清除默认下拉框样式----------*/
+.numSelector{
+    /*很关键：将默认的select选择框样式清除*/
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+}
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }
+
+.gameScore {
+    position: absolute;
+    right: 0px;
+    bottom: 8px;
+
+    padding:20px 15px ;
+    border-radius: 5px;
+    border: 1px solid #eeeeee;
+    box-shadow: #333333 1px 1px 3px;;
+    background: #f58cdf;
+}
+
+.gameFoot {
+    height: 50px;
+    margin-top: 5px;
+}
+
+.gameFootTxt {
+    font-size: 10px;
+    color: #333;
+    float: right;
+}
+.copy{
+    font-size: 9px;
+    font-family:Arial;
+    color: #cccccc;
+}
+/*==========*/
+
+#gameDiv {
+    margin: auto;
+    display: block;
+
+    width: 402px;
+    height: 502px;
+    border: 10px solid #f6f6f6;
+
+    border-radius: 5px;
+    background: #ffffff;
+    box-shadow: #333333 1px 1px 3px;;
+    /**文字不可选**/
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+}
+
+.card {
+    position: absolute;
+    margin-top: 9px;
+    margin-left: 9px;
+    border: 1px solid #e0d6db;
+
+    /*overflow:hidden;*/
+    text-shadow: #000000 0 1px 2px;
+    color: #ffffff;
+
+    line-height: 80px;
+    text-align: center;
+    font-size: 40px;
+    border-radius: 5px;
+}
+
+.cardbk{
+    position: absolute;
+    border: 10px solid #f6f6f6;
+}
+.card2 {
+    background: #f6f4cd;
+}
+
+.card4 {
+    background: #fbf49b;
+}
+
+.card8 {
+    background: #fcd33d;
+}
+
+.card16 {
+    background: rgb(255, 200, 0);
+}
+
+.card32 {
+    background: rgb(230, 175, 0);
+}
+
+.card64 {
+    background: rgb(220, 150, 0);
+}
+
+.card128 {
+    background: #ffc8a1;
+}
+
+.card256 {
+    background: #f9a273;
+}
+
+.card512 {
+    background: #ffa1a1
+}
+
+.card1024 {
+    background: #f3a97c;
+}
+
+.card2048 {
+    background: #fe5151;
+}
