@@ -29,7 +29,7 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
             start();
             //
             $(".loading").remove();
-            $gameContainer.css("display:block");
+            $gameContainer.css("display","block");
         }
         //==========================================================================================
         function start() {
