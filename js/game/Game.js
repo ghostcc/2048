@@ -172,8 +172,8 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
             var moveX = (Math.abs(unitDelta[0]) < Math.abs(unitDelta[1])) ? true : false;
             var dir = moveX ? Utils.sign(unitDelta[1]) : Utils.sign(unitDelta[0]);
             if (dir != 0) {
-                var toIndex = {true: {'-1': 2, '1': 3}, false: {'-1': 0, '1': 1}};
-                var index = toIndex[moveX][dir];
+                var toIndex = {'true': {'-1': 2, '1': 3}, 'false': {'-1': 0, '1': 1}};
+                var index = toIndex[moveX.toString()][dir];
                 move(CardMatrix.dirs[index]);
             }
             //
