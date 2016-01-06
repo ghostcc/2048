@@ -27,6 +27,9 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
             });
             //
             start();
+            //
+            $(".loading").remove();
+            $gameContainer.css("display:block");
         }
         //==========================================================================================
         function start() {
@@ -244,8 +247,10 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
                     return;
                 }
             }
+            setTimeout(function(){
+                lock = false;
+            },200)
 
-            lock = false;
 
         }
 
