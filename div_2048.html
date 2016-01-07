@@ -45,13 +45,13 @@
 </div>
 <script src="js/require.js" type="text/javascript"></script>
 <script type="text/javascript">
-    requirejs.config({
+    require.config({
         baseUrl: "js",
         paths: {
             jquery: 'jquery-1.11.3',
         }
     })
-    requirejs(['jquery', "game/Game"], function ($, Game) {
+    require(['jquery', "game/Game"], function ($, Game) {
         this.Game = Game;
         Game.init();
     })

@@ -1,8 +1,8 @@
 /**
  * Created by CC on 16-1-3.
  */
-define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"],
-    function ($, Hammer, CardMatrix, Card, Vector, Utils) {
+define(["jquery", "game/CardMatrix", 'game/Card', "utils/Vector", "utils/Utils"],
+    function ($, CardMatrix, Card, Vector, Utils) {
 
         //////////=============================////////////////
         var matrix;
@@ -29,8 +29,9 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
             start();
             //
             $(".loading").remove();
-            $gameContainer.css("display","block");
+            $gameContainer.css("display", "block");
         }
+
         //==========================================================================================
         function start() {
             var numX = parseInt($("#numX").val());
@@ -91,8 +92,8 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
 
         function bindEvent(bind) {
             bindKeys(bind);
-            //bindMouseDrag(bind);
-            bindHummerEvent(bind);
+            bindTouchOrMouseDrag(bind);
+            //bindHummerEvent(bind);
         }
 
         ///========================================================
@@ -120,29 +121,48 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
         var bodyHammer;
 
         function bindHummerEvent(bind) {
-            bodyHammer = bodyHammer ? bodyHammer :
-                new Hammer.Manager($body[0], {
+            require(["hammer"], function (Hammer) {
+                console.log("!!!! use Hammer Touch");
+                ///
+                bodyHammer = !bodyHammer ? new Hammer.Manager($body[0], {
                     recognizers: [
                         [Hammer.Pan, {direction: Hammer.DIRECTION_ALL}],
                     ]
-                });
-            if (bind) {
-                bodyHammer.on('panup pandown panleft panright', onHammerpan);
-            } else {
-                bodyHammer.off('panup pandown panleft panright', onHammerpan);
-            }
+                }) : bodyHammer;
+                //
+                if (bind) {
+                    bodyHammer.on('panup pandown panleft panright', onHammerPan);
+                } else {
+                    bodyHammer.off('panup pandown panleft panright', onHammerPan);
+                }
+            });
         }
 
-        function onHammerpan(event) {
-            console.log("hammer"+event.type);
+
+        function onHammerPan(event) {
+            console.log("hammer" + event.type);
             var indexs = {panup: 0, pandown: 1, panleft: 2, panright: 3};
             var index = indexs[event.type];
             move(CardMatrix.dirs[index]);
         }
 
         //================================Old PC Mouse==============================
-        var hasTouch = false;
-        console.log("hasTouch" + hasTouch);
+
+
+        var hasTouch = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+
+        /**
+         * 是否用鼠标或者touch
+         * @param bind
+         */
+        function bindTouchOrMouseDrag(bind) {
+            if (hasTouch) {
+                bindHummerEvent(bind);
+            } else {
+                bindMouseDrag(bind);
+            }
+        }
+
 
         function bindMouseDrag(bind) {
             if (bind) {
@@ -247,9 +267,9 @@ define(["jquery", 'hammer', "game/CardMatrix", 'game/Card', "utils/Vector", "uti
                     return;
                 }
             }
-            setTimeout(function(){
+            setTimeout(function () {
                 lock = false;
-            },200)
+            }, 200)
 
 
         }
