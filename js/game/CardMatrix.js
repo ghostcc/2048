@@ -269,7 +269,7 @@ define(["../game/Card", "../utils/Matrix", '../utils/Vector', "../utils/Utils"],
         if (due <= 0) {
             card.$card.css(o);
         } else {
-            card.$card.animate(o, due, complete);
+            card.$card.stop(true,true).animate(o, due, complete);
         }
     }
 
